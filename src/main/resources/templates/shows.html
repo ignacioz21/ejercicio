@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/layout :: head"></head>
+<body>
+    <header th:replace="fragments/layout :: header"></header>
+    
+    <main class="container my-5">
+        <h1 class="mb-4">Cartelera - Funciones Disponibles</h1>
+        
+        <div class="row">
+            <div class="col-12" th:if="${#lists.isEmpty(shows)}">
+                <div class="alert alert-info">
+                    No hay funciones disponibles en este momento.
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4" th:each="show : ${shows}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${show.movie.title}">Película</h5>
+                        <p class="card-text">
+                            <strong>Fecha y Hora:</strong> <span th:text="${#temporals.format(show.showTime, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <strong>Sala:</strong> <span th:text="${show.room}">Sala 1</span><br>
+                            <strong>Precio:</strong> $<span th:text="${show.price}">10.00</span><br>
+                            <strong>Asientos Disponibles:</strong> <span th:text="${show.availableSeats}">50</span>
+                        </p>
+                    </div>
+                    <div class="card-footer" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/reservations/create}" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="showId" th:value="${show.id}">
+                            <input type="number" name="seats" class="form-control" placeholder="Nº Asientos" 
+                                   min="1" th:max="${show.availableSeats}" required style="width: 120px;">
+                            <button type="submit" class="btn btn-success">Reservar</button>
+                        </form>
+                    </div>
+                    <div class="card-footer" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="btn btn-primary">Inicia sesión para reservar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html>

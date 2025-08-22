@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/layout :: head"></head>
+<body>
+    <header th:replace="fragments/layout :: header"></header>
+    
+    <main class="container my-5">
+        <div class="hero-section text-center mb-5">
+            <h1 class="display-4">Bienvenido a Cinema</h1>
+            <p class="lead">Disfruta de las mejores películas en la mejor calidad</p>
+            
+            <!-- Iframe para tráiler destacado -->
+            <div class="ratio ratio-16x9 my-4">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="Tráiler Destacado" 
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Películas en Cartelera</h2>
+            </div>
+            
+            <div class="col-md-4 mb-4" th:each="movie : ${movies}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${movie.title}">Título</h5>
+                        <p class="card-text" th:text="${movie.description}">Descripción</p>
+                        <p class="text-muted">
+                            <strong>Género:</strong> <span th:text="${movie.genre}">Género</span><br>
+                            <strong>Director:</strong> <span th:text="${movie.director}">Director</span><br>
+                            <strong>Duración:</strong> <span th:text="${movie.duration}">120</span> min
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{/shows}" class="btn btn-primary">Ver Funciones</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de contacto -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="mb-4">Contacto</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html>
