@@ -29,6 +29,7 @@ public class ShowController {
     @GetMapping("/admin/shows")
     public String adminShows(Model model) {
         model.addAttribute("shows", showService.findAll());
+        //model.addAttribute("movie", new Movie());
         return "admin/shows";
     }
     

@@ -38,9 +38,6 @@
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <span class="navbar-text me-3">Hola, <span sec:authentication="name"></span></span>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post" class="d-inline">
                             <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
                         </form>
